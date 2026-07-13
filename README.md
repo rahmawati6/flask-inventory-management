@@ -1,4 +1,4 @@
-# Sistem Pengajuan Barang Material
+﻿# Sistem Pengajuan Barang Material
 
 Sistem Pengajuan Barang Material adalah aplikasi web berbasis **Python Flask** untuk mengelola data barang material, pengajuan barang, approval bertahap, histori pengajuan, tanda tangan digital, dan cetak PDF detail pengajuan. Aplikasi ini dirancang dengan tampilan dashboard modern menggunakan AdminLTE, Bootstrap, Font Awesome, dan CSS custom.
 
@@ -12,6 +12,12 @@ Sistem Pengajuan Barang Material adalah aplikasi web berbasis **Python Flask** u
 
 ### Dashboard User
 ![Dashboard User](docs/screenshots/dashboard-user.png)
+
+### Dashboard Accounting
+![Dashboard Accounting](docs/screenshots/dashboard-accounting.png)
+
+### Dashboard Manager
+![Dashboard Manager](docs/screenshots/dashboard-manager.png)
 
 ## Fitur Utama
 
@@ -81,43 +87,48 @@ Status yang dapat dipantau user:
 
 ```text
 flask_python6/
-├── app.py
-├── database.sql
-├── requirements.txt
-├── README.md
-├── docs/
-│   └── screenshots/
-│       ├── login.png
-│       ├── dashboard-admin.png
-│       └── dashboard-user.png
-├── static/
-│   └── adminlte/
-│       └── custom.css
-└── templates/
-    ├── login.html
-    ├── dashboard_admin.html
-    ├── dashboard_user.html
-    ├── dashboard_accounting.html
-    ├── dashboard_manager.html
-    ├── barang.html
-    ├── pengajuan_barang.html
-    ├── approval_pengajuan.html
-    ├── approval_accounting.html
-    ├── approval_manager.html
-    ├── histori_pengajuan_user.html
-    ├── histori_pengajuan_admin.html
-    ├── histori_accounting.html
-    ├── histori_manager.html
-    ├── tanda_tangan_pengajuan.html
-    └── material/
-        └── partials/
-            ├── navbar.html
-            ├── sidebar_admin.html
-            ├── sidebar_user.html
-            ├── sidebar_accounting.html
-            └── sidebar_manager.html
+|-- app.py
+|-- database.sql
+|-- requirements.txt
+|-- README.md
+|-- docs/
+|   `-- screenshots/
+|       |-- login.png
+|       |-- dashboard-admin.png
+|       |-- dashboard-user.png
+|       |-- dashboard-accounting.png
+|       `-- dashboard-manager.png
+|-- static/
+|   `-- adminlte/
+|       |-- custom.css
+|       |-- app-ui.js
+|       |-- logo-mark.png
+|       |-- login-background.png
+|       `-- sidebar-background.png
+`-- templates/
+    |-- login.html
+    |-- dashboard_admin.html
+    |-- dashboard_user.html
+    |-- dashboard_accounting.html
+    |-- dashboard_manager.html
+    |-- barang.html
+    |-- pengajuan_barang.html
+    |-- approval_pengajuan.html
+    |-- approval_accounting.html
+    |-- approval_manager.html
+    |-- histori_pengajuan_user.html
+    |-- histori_pengajuan_admin.html
+    |-- histori_accounting.html
+    |-- histori_manager.html
+    |-- tanda_tangan_pengajuan.html
+    `-- material/
+        `-- partials/
+            |-- navbar.html
+            |-- sidebar_admin.html
+            |-- sidebar_user.html
+            |-- sidebar_accounting.html
+            `-- sidebar_manager.html
 ```
-
 ## Instalasi dan Menjalankan Project
 
 1. Clone repository:
