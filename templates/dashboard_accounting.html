@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard Accounting | Sistem Pengajuan Barang Material</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='adminlte/custom.css') }}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    {% include 'material/partials/sidebar_accounting.html' %}
+    {% include 'material/partials/navbar.html' %}
+    <div class="content-wrapper">
+        <section class="content-header"><div class="container-fluid"><h1>Dashboard Accounting</h1></div></section>
+        <section class="content">
+            <div class="container-fluid app-shell">
+                <div class="hero-card">
+                    <h2>Selamat Datang Accounting 👋</h2>
+                    <p>Kelola verifikasi dana dan approval pengajuan barang material.</p>
+                    <div class="hero-date"><i class="fas fa-wallet"></i> Verifikasi dana perusahaan</div>
+                </div>
+                <div class="stats-grid admin">
+                    <a href="{{ url_for('histori_accounting') }}" class="stat-card"><div class="stat-icon blue"><i class="fas fa-money-bill-wave"></i></div><p>Total Dana Pengajuan</p><h3>{{ total_dana|rupiah }}</h3><small>Semua pengajuan</small></a>
+                    <a href="{{ url_for('approval_accounting') }}" class="stat-card"><div class="stat-icon yellow"><i class="fas fa-clock"></i></div><p>Menunggu Verifikasi</p><h3>{{ menunggu_verifikasi }}</h3><small>Perlu dicek</small></a>
+                    <a href="{{ url_for('histori_accounting') }}" class="stat-card"><div class="stat-icon green"><i class="fas fa-check-circle"></i></div><p>Dana Disetujui</p><h3>{{ dana_disetujui }}</h3><small>Approved</small></a>
+                    <a href="{{ url_for('histori_accounting') }}" class="stat-card"><div class="stat-icon red"><i class="fas fa-times-circle"></i></div><p>Dana Ditolak</p><h3>{{ dana_ditolak }}</h3><small>Rejected</small></a>
+                    <a href="{{ url_for('histori_accounting') }}" class="stat-card"><div class="stat-icon purple"><i class="fas fa-receipt"></i></div><p>Total Pengeluaran</p><h3>{{ total_pengeluaran|rupiah }}</h3><small>Pengajuan finish</small></a>
+                </div>
+                <div class="card table-card mt-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3 class="card-title mb-0">Daftar Pengajuan Terbaru</h3>
+                        <a href="{{ url_for('approval_accounting') }}" class="btn btn-primary btn-sm">Verifikasi Dana</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead><tr><th>No</th><th>Kode</th><th>User</th><th>Tanggal</th><th>Grand Total</th><th>Accounting</th><th>Manager</th><th>PDF</th></tr></thead>
+                            <tbody>
+                            {% for item in pengajuan_terbaru %}
+                                <tr>
+                                    <td>{{ loop.index }}</td><td>{{ item.kode_pengajuan }}</td><td>{{ item.username }}</td><td>{{ item.tanggal }}</td><td>{{ item.grand_total|rupiah }}</td>
+                                    <td><span class="status-badge {{ item.status_accounting|status_badge }}">{{ item.status_accounting }}</span></td>
+                                    <td><span class="status-badge {{ item.status_manager|status_badge }}">{{ item.status_manager }}</span></td>
+                                    <td><a class="btn btn-danger btn-sm" href="{{ url_for('detail_pdf', id_pengajuan=item.id_pengajuan) }}" target="_blank"><i class="fas fa-file-pdf"></i></a></td>
+                                </tr>
+                            {% else %}
+                                <tr><td colspan="8" class="text-center text-muted">Belum ada pengajuan.</td></tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer class="main-footer"><strong>Sistem Pengajuan Barang Material</strong><span class="float-right d-none d-sm-inline">Accounting</span></footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+</body>
+</html>

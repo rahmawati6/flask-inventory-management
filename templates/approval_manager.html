@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Approval Manager | Sistem Pengajuan Barang Material</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='adminlte/custom.css') }}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    {% include 'material/partials/sidebar_manager.html' %}
+    {% include 'material/partials/navbar.html' %}
+    <div class="content-wrapper">
+        <section class="content-header"><div class="container-fluid app-shell"><h1>Approval Manager</h1><p class="text-muted mb-0">Hanya pengajuan yang sudah disetujui Accounting.</p></div></section>
+        <section class="content"><div class="container-fluid app-shell">
+            {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{% for category, message in messages %}<div class="alert alert-{{ category }} alert-dismissible fade show">{{ message }}<button type="button" class="close" data-dismiss="alert">&times;</button></div>{% endfor %}{% endif %}{% endwith %}
+            <div class="card table-card"><div class="card-header"><h3 class="card-title mb-0"><i class="fas fa-user-check text-primary me-2"></i>Menunggu Approval Manager</h3></div><div class="table-responsive">
+                <table class="table table-hover">
+                    <thead><tr><th>No</th><th>Kode</th><th>User</th><th>Grand Total</th><th>Catatan Accounting</th><th>Catatan Manager</th><th>Aksi</th><th>PDF</th></tr></thead>
+                    <tbody>
+                    {% for item in data_pengajuan %}
+                    <tr>
+                        <td>{{ loop.index }}</td><td>{{ item.kode_pengajuan }}</td><td>{{ item.username }}</td><td>{{ item.grand_total|rupiah }}</td><td>{{ item.catatan_accounting or '-' }}</td>
+                        <td colspan="2">
+                            <form method="post" action="{{ url_for('tanda_tangan_manager', id_pengajuan=item.id_pengajuan) }}">
+                                <textarea class="form-control form-control-sm mb-2" name="catatan_manager" placeholder="Catatan manager"></textarea>
+                                <button class="btn btn-success btn-sm" type="submit"><i class="fas fa-signature"></i> Approve & Tanda Tangan</button>
+                                <button class="btn btn-danger btn-sm" type="submit" formaction="{{ url_for('manager_reject', id_pengajuan=item.id_pengajuan) }}" onclick="return confirm('Tolak pengajuan ini?')"><i class="fas fa-times"></i> Reject</button>
+                            </form>
+                        </td>
+                        <td><a class="btn btn-danger btn-sm" href="{{ url_for('detail_pdf', id_pengajuan=item.id_pengajuan) }}" target="_blank"><i class="fas fa-file-pdf"></i></a></td>
+                    </tr>
+                    {% else %}<tr><td colspan="8" class="text-center text-muted">Tidak ada pengajuan menunggu manager.</td></tr>{% endfor %}
+                    </tbody>
+                </table>
+            </div></div>
+        </div></section>
+    </div>
+    <footer class="main-footer"><strong>Sistem Pengajuan Barang Material</strong><span class="float-right d-none d-sm-inline">Manager</span></footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script><script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login | Sistem Pengajuan Barang Material</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='adminlte/custom.css') }}">
+</head>
+<body class="modern-login-body">
+<main class="login-split">
+    <section class="login-left">
+        <div>
+            <div class="login-logo-mark">
+                <i class="fas fa-cube"></i>
+            </div>
+            <h1>Sistem Pengajuan Barang <span>Material</span></h1>
+            <p>Kelola pengajuan barang material dengan mudah, cepat dan terstruktur.</p>
+            <div class="visual-board login-visual">
+                <div class="visual-card visual-main">
+                    <div class="visual-card-head">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="visual-chart">
+                        <i></i><i></i><i></i><i></i>
+                    </div>
+                    <div class="visual-line wide"></div>
+                    <div class="visual-line"></div>
+                </div>
+                <div class="visual-card visual-small visual-inventory">
+                    <i class="fas fa-cube"></i>
+                    <strong>Material</strong>
+                    <span>Ready</span>
+                </div>
+                <div class="visual-card visual-small visual-status">
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Approval</strong>
+                    <span>Fast track</span>
+                </div>
+            </div>
+        </div>
+        <div class="feature-row">
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <strong>Aman</strong>
+                <span>Data terjaga keamanannya</span>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                <strong>Cepat</strong>
+                <span>Proses pengajuan efisien</span>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                <strong>Terstruktur</strong>
+                <span>Informasi mudah dilacak</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="login-right">
+        <div class="login-card-modern">
+            <div class="login-user-icon">
+                <i class="fas fa-user"></i>
+            </div>
+            <h2>Selamat Datang</h2>
+            <p class="subtitle">Silakan login terlebih dahulu</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="post" action="{{ url_for('login') }}">
+                <div class="modern-input">
+                    <label>Username</label>
+                    <div class="input-shell">
+                        <i class="far fa-user"></i>
+                        <input type="text" name="username" placeholder="Masukkan username" required autofocus>
+                    </div>
+                </div>
+                <div class="modern-input">
+                    <label>Password</label>
+                    <div class="input-shell">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="password" placeholder="Masukkan password" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-gradient login-btn">
+                    <i class="fas fa-sign-in-alt me-2"></i> Login
+                </button>
+            </form>
+            <div class="login-footer">
+                &copy; 2025 <strong>Sistem Pengajuan Barang Material</strong>. All rights reserved.
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="{{ url_for('dashboard_admin') }}" class="brand-link app-brand">
+        <span class="brand-icon"><i class="fas fa-cubes"></i></span>
+        <span class="brand-text">
+            Sistem Pengajuan Barang Material
+            <small>Management System</small>
+        </span>
+    </a>
+    <div class="sidebar">
+        <div class="user-panel role-panel d-flex">
+            <div class="image role-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">Admin</a>
+                <span class="online-status"><span class="online-dot"></span> Online</span>
+            </div>
+        </div>
+        <div class="sidebar-label">Menu Utama</div>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+                <li class="nav-item">
+                    <a href="{{ url_for('dashboard_admin') }}" class="nav-link {% if request.endpoint == 'dashboard_admin' %}active{% endif %}">
+                        <i class="nav-icon fas fa-chart-line"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('approval_pengajuan') }}" class="nav-link {% if request.endpoint == 'approval_pengajuan' %}active{% endif %}">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Approval Pengajuan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('histori_pengajuan_admin') }}" class="nav-link {% if request.endpoint == 'histori_pengajuan_admin' %}active{% endif %}">
+                        <i class="nav-icon fas fa-history"></i>
+                        <p>Histori Pengajuan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('barang') }}" class="nav-link {% if request.endpoint in ['barang', 'tambah_barang', 'edit_barang'] %}active{% endif %}">
+                        <i class="nav-icon fas fa-boxes"></i>
+                        <p>Data Barang</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('manajemen_user') }}" class="nav-link {% if request.endpoint == 'manajemen_user' %}active{% endif %}">
+                        <i class="nav-icon fas fa-users-cog"></i>
+                        <p>Manajemen User</p>
+                    </a>
+                </li>
+                <li class="sidebar-divider"></li>
+                <li class="nav-item">
+                    <a href="{{ url_for('logout') }}" class="nav-link">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <p>Logout</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-art"></div>
+        <div class="sidebar-copy">&copy; 2025 Sistem Pengajuan Barang Material</div>
+    </div>
+</aside>

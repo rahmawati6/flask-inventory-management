@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pengajuan Barang | Sistem Pengajuan Barang Material</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='adminlte/custom.css') }}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    {% include 'material/partials/sidebar_user.html' %}
+    {% include 'material/partials/navbar.html' %}
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid app-shell">
+                <h1>Pengajuan Barang</h1>
+                <p class="text-muted mb-0">Material Management System</p>
+            </div>
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="post" action="{{ url_for('pengajuan_barang') }}" id="formPengajuan">
+                    <div class="card table-card">
+                        <div class="card-header pengajuan-toolbar">
+                            <h3 class="card-title mb-0"><i class="fas fa-file-invoice text-primary me-2"></i>Form Pengajuan Material</h3>
+                            <button type="button" class="btn btn-primary btn-sm" id="btnTambahBaris">
+                                <i class="fas fa-plus me-1"></i> Tambah Barang
+                            </button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="tabelPengajuan">
+                                <thead>
+                                <tr>
+                                    <th>Barang</th>
+                                    <th style="width: 180px;">Harga</th>
+                                    <th style="width: 120px;">Qty</th>
+                                    <th style="width: 180px;">Sub Total</th>
+                                    <th style="width: 80px;">Aksi</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <select name="id_barang[]" class="form-control barang-select" required>
+                                            <option value="" data-harga="0">Pilih Barang</option>
+                                            {% for item in data_barang %}
+                                                <option value="{{ item.id_barang }}" data-harga="{{ item.harga }}">{{ item.nama_barang }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control harga" value="0" readonly>
+                                        <input type="hidden" name="harga[]" class="harga-raw" value="0">
+                                    </td>
+                                    <td><input type="number" name="qty[]" class="form-control qty" min="1" value="1" required></td>
+                                    <td>
+                                        <input type="text" class="form-control sub-total" value="0" readonly>
+                                        <input type="hidden" name="sub_total[]" class="sub-total-raw" value="0">
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-danger btn-sm btn-hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <div class="total-panel">
+                                <span>Grand Total</span>
+                                <strong id="grandTotalText">Rp 0</strong>
+                            </div>
+                            <input type="hidden" id="grandTotal" value="0">
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-gradient">
+                                    <i class="fas fa-paper-plane me-1"></i> Kirim Pengajuan
+                                </button>
+                                <a href="{{ url_for('dashboard_user') }}" class="btn btn-secondary">Kembali</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+    <footer class="main-footer text-sm">
+        <strong>Sistem Pengajuan Barang Material</strong>
+        <span class="float-right d-none d-sm-inline">Material Management System</span>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<script>
+    function formatRupiah(angka) {
+        return 'Rp ' + Number(angka || 0).toLocaleString('id-ID');
+    }
+
+    function hitungBaris(row) {
+        const harga = Number(row.find('.barang-select option:selected').data('harga') || 0);
+        const qty = Number(row.find('.qty').val() || 0);
+        const subTotal = harga * qty;
+        row.find('.harga').val(formatRupiah(harga));
+        row.find('.harga-raw').val(harga);
+        row.find('.sub-total').val(formatRupiah(subTotal));
+        row.find('.sub-total-raw').val(subTotal);
+        return subTotal;
+    }
+
+    function hitungGrandTotal() {
+        let grandTotal = 0;
+        $('#tabelPengajuan tbody tr').each(function () {
+            grandTotal += hitungBaris($(this));
+        });
+        $('#grandTotal').val(grandTotal);
+        $('#grandTotalText').text(formatRupiah(grandTotal));
+    }
+
+    function barisBaru() {
+        const row = $('#tabelPengajuan tbody tr:first').clone();
+        row.find('select').val('');
+        row.find('.qty').val(1);
+        row.find('.harga').val('0');
+        row.find('.harga-raw').val(0);
+        row.find('.sub-total').val('0');
+        row.find('.sub-total-raw').val(0);
+        return row;
+    }
+
+    $('#btnTambahBaris').on('click', function () {
+        $('#tabelPengajuan tbody').append(barisBaru());
+        hitungGrandTotal();
+    });
+
+    $(document).on('change keyup', '.barang-select, .qty', function () {
+        hitungGrandTotal();
+    });
+
+    $(document).on('click', '.btn-hapus', function () {
+        if ($('#tabelPengajuan tbody tr').length > 1) {
+            $(this).closest('tr').remove();
+            hitungGrandTotal();
+        }
+    });
+
+    hitungGrandTotal();
+</script>
+</body>
+</html>

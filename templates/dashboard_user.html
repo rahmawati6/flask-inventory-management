@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard User | Sistem Pengajuan Barang Material</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='adminlte/custom.css') }}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    {% include 'material/partials/sidebar_user.html' %}
+    {% include 'material/partials/navbar.html' %}
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <h1>Dashboard User</h1>
+            </div>
+        </section>
+        <section class="content">
+            <div class="container-fluid app-shell">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <div class="hero-card">
+                    <h2>Selamat Datang User 👋</h2>
+                    <p>Kelola pengajuan barang material dengan mudah, cepat dan terstruktur.</p>
+                    <div class="hero-date"><i class="far fa-calendar-alt"></i> <span id="todayLabel">Hari ini</span></div>
+                    <div class="visual-board hero-visual">
+                        <div class="visual-card visual-main">
+                            <div class="visual-card-head">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="visual-chart">
+                                <i></i><i></i><i></i><i></i>
+                            </div>
+                            <div class="visual-line wide"></div>
+                            <div class="visual-line"></div>
+                        </div>
+                        <div class="visual-card visual-small visual-inventory">
+                            <i class="fas fa-cube"></i>
+                            <strong>{{ total_barang }}</strong>
+                            <span>Barang</span>
+                        </div>
+                        <div class="visual-card visual-small visual-status">
+                            <i class="fas fa-file-alt"></i>
+                            <strong>{{ total_pengajuan }}</strong>
+                            <span>Pengajuan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid admin">
+                    <a href="{{ url_for('barang') }}" class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-cube"></i></div>
+                        <p>Total Barang</p>
+                        <h3>{{ total_barang }}</h3>
+                        <small>Lihat semua barang</small>
+                    </a>
+                    <a href="{{ url_for('histori_pengajuan_user') }}" class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-file-alt"></i></div>
+                        <p>Pengajuan Saya</p>
+                        <h3>{{ total_pengajuan }}</h3>
+                        <small>Lihat pengajuan Anda</small>
+                    </a>
+                    <a href="{{ url_for('histori_pengajuan_user') }}" class="stat-card">
+                        <div class="stat-icon purple"><i class="fas fa-route"></i></div>
+                        <p>Monitoring Pengajuan</p>
+                        <h3>{{ total_draft }}</h3>
+                        <small>Lihat progress approval</small>
+                    </a>
+                    <a href="{{ url_for('histori_pengajuan_user') }}" class="stat-card">
+                        <div class="stat-icon yellow"><i class="fas fa-clock"></i></div>
+                        <p>Pengajuan Draft</p>
+                        <h3>{{ total_draft }}</h3>
+                        <small>Menunggu approval</small>
+                    </a>
+                    <a href="{{ url_for('histori_pengajuan_user') }}" class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                        <p>Pengajuan Disetujui</p>
+                        <h3>{{ total_finish }}</h3>
+                        <small>Pengajuan finish</small>
+                    </a>
+                </div>
+
+                <div class="dashboard-grid user">
+                    <div class="card table-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="card-title mb-0">Pengajuan Terbaru Saya</h3>
+                            <a href="{{ url_for('histori_pengajuan_user') }}" class="btn btn-primary btn-sm">Lihat Semua</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Kode</th>
+                                    <th>Tanggal</th>
+                                    <th>Grand Total</th>
+                                    <th>Status Akhir</th>
+                                    <th>Monitoring Flow</th>
+                                    <th>Aksi</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in pengajuan_terbaru %}
+                                    <tr>
+                                        <td>{{ item.kode_pengajuan }}</td>
+                                        <td>{{ item.tanggal }}</td>
+                                        <td>{{ item.grand_total|rupiah }}</td>
+                                        <td><span class="status-badge {{ item.status|status_badge }}">{{ item.status }}</span></td>
+                                        <td>
+                                            <div class="approval-flow compact">
+                                                <div class="flow-step {{ item.status_admin|flow_step_class }}"><span>1</span><small>Admin</small></div>
+                                                <div class="flow-step {{ item.status_accounting|flow_step_class }}"><span>2</span><small>Accounting</small></div>
+                                                <div class="flow-step {{ item.status_manager|flow_step_class }}"><span>3</span><small>Manager</small></div>
+                                                <div class="flow-step {{ item|finish_step_class }}"><span>4</span><small>Finish</small></div>
+                                            </div>
+                                            <div class="flow-note">{{ item|approval_flow_message }}</div>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary btn-sm" href="{{ url_for('histori_pengajuan_user') }}">
+                                                <i class="fas fa-route mr-1"></i> Lihat Progress
+                                            </a>
+                                            <a class="btn btn-secondary btn-sm action-btn" href="{{ url_for('detail_pdf', id_pengajuan=item.id_pengajuan) }}" target="_blank">
+                                                <i class="far fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted">Belum ada pengajuan.</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title mb-0">Aksi Cepat</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="quick-grid">
+                                <a class="quick-action" href="{{ url_for('barang') }}">
+                                    <div class="stat-icon blue"><i class="fas fa-cube"></i></div>
+                                    <div><strong>Lihat Data Barang</strong><span>Lihat semua barang material</span></div>
+                                </a>
+                                <a class="quick-action" href="{{ url_for('pengajuan_barang') }}">
+                                    <div class="stat-icon green"><i class="fas fa-plus-square"></i></div>
+                                    <div><strong>Buat Pengajuan</strong><span>Buat pengajuan barang baru</span></div>
+                                </a>
+                                <a class="quick-action" href="{{ url_for('histori_pengajuan_user') }}">
+                                    <div class="stat-icon purple"><i class="fas fa-history"></i></div>
+                                    <div><strong>Histori Pengajuan</strong><span>Lihat riwayat pengajuan</span></div>
+                                </a>
+                                {% if latest_pengajuan_id %}
+                                    <a class="quick-action" href="{{ url_for('detail_pdf', id_pengajuan=latest_pengajuan_id) }}" target="_blank">
+                                        <div class="stat-icon yellow"><i class="fas fa-file-pdf"></i></div>
+                                        <div><strong>Cetak PDF</strong><span>Cetak detail terbaru</span></div>
+                                    </a>
+                                {% else %}
+                                    <a class="quick-action" href="{{ url_for('pengajuan_barang') }}">
+                                        <div class="stat-icon yellow"><i class="fas fa-file-pdf"></i></div>
+                                        <div><strong>Cetak PDF</strong><span>Buat pengajuan terlebih dahulu</span></div>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer class="main-footer">
+        <strong>Sistem Pengajuan Barang Material</strong>
+        <span class="float-right d-none d-sm-inline">Version 1.0.0</span>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<script>
+    const formatter = new Intl.DateTimeFormat('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('todayLabel').textContent = formatter.format(new Date());
+</script>
+</body>
+</html>
