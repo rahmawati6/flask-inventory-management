@@ -83,6 +83,122 @@ a {
     font-weight: 700;
 }
 
+.app-alert-inline {
+    border: 0;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+}
+
+.app-toast-container {
+    display: grid;
+    gap: 10px;
+    max-width: min(420px, calc(100vw - 32px));
+    position: fixed;
+    right: 22px;
+    top: 88px;
+    z-index: 3000;
+}
+
+.app-toast {
+    align-items: center;
+    animation: toastIn 0.22s ease;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--blue);
+    border-radius: 14px;
+    box-shadow: 0 18px 44px rgba(15, 23, 42, 0.16);
+    color: var(--ink);
+    display: flex;
+    gap: 14px;
+    justify-content: space-between;
+    padding: 14px 16px;
+}
+
+.app-toast-success { border-left-color: var(--green); }
+.app-toast-warning { border-left-color: var(--yellow); }
+.app-toast-danger { border-left-color: var(--red); }
+
+.app-toast button {
+    background: transparent;
+    border: 0;
+    color: var(--muted);
+    font-size: 20px;
+    line-height: 1;
+}
+
+.app-toast.is-hiding {
+    opacity: 0;
+    transform: translateX(18px);
+    transition: all 0.2s ease;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.app-confirm-backdrop {
+    align-items: center;
+    background: rgba(8, 27, 51, 0.48);
+    display: none;
+    inset: 0;
+    justify-content: center;
+    padding: 24px;
+    position: fixed;
+    z-index: 3100;
+}
+
+.app-confirm-backdrop.is-visible {
+    display: flex;
+}
+
+.app-confirm-dialog {
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    border-radius: 18px;
+    box-shadow: 0 28px 80px rgba(15, 23, 42, 0.28);
+    max-width: 430px;
+    padding: 28px;
+    text-align: center;
+    width: 100%;
+}
+
+.app-confirm-icon {
+    align-items: center;
+    background: #fef3c7;
+    border-radius: 999px;
+    color: #d97706;
+    display: inline-flex;
+    font-size: 28px;
+    height: 68px;
+    justify-content: center;
+    margin-bottom: 18px;
+    width: 68px;
+}
+
+.app-confirm-dialog h3 {
+    color: var(--ink);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.app-confirm-dialog p {
+    color: var(--muted);
+    margin: 10px 0 22px;
+}
+
+.app-confirm-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
 .btn {
     border-radius: 12px;
     font-weight: 600;
@@ -197,6 +313,44 @@ a {
     justify-content: center;
     margin-bottom: 36px;
     width: 72px;
+}
+
+.login-brand-badge {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    border-radius: 18px;
+    box-shadow: 0 18px 42px rgba(2, 12, 32, 0.18);
+    display: inline-flex;
+    height: 74px;
+    justify-content: center;
+    margin-bottom: 34px;
+    overflow: hidden;
+    padding: 9px 14px;
+    width: 236px;
+}
+
+.login-brand-badge img {
+    display: block;
+    height: 100%;
+    object-fit: contain;
+    width: 100%;
+}
+
+.login-logo-icon {
+    background: #ffffff;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 14px 30px rgba(37, 99, 235, 0.14);
+    overflow: hidden;
+}
+
+.login-logo-icon img {
+    height: 100%;
+    object-fit: cover;
+    object-position: left center;
+    transform: scale(1.75);
+    transform-origin: left center;
+    width: 100%;
 }
 
 .visual-board {
@@ -356,6 +510,58 @@ a {
     padding: 50px;
 }
 
+.login-bg-body {
+    background:
+        linear-gradient(90deg, rgba(248, 251, 255, 0.04), rgba(248, 251, 255, 0.7) 64%, rgba(248, 251, 255, 0.9)),
+        url("../adminlte/login-background.png") center center / cover no-repeat fixed;
+    min-height: 100vh;
+}
+
+.login-background-shell {
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(248, 251, 255, 0.18) 55%, rgba(248, 251, 255, 0.78)),
+        url("../adminlte/login-background.png") center center / cover no-repeat;
+    border-radius: 22px;
+    box-shadow: 0 28px 80px rgba(15, 23, 42, 0.08);
+    grid-template-columns: minmax(0, 1.45fr) minmax(420px, 0.85fr);
+    isolation: isolate;
+    min-height: calc(100vh - 44px);
+    position: relative;
+}
+
+.login-background-shell::after {
+    background: linear-gradient(90deg, transparent 52%, rgba(255, 255, 255, 0.66) 72%, rgba(255, 255, 255, 0.82));
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+}
+
+.login-background-shell .login-left {
+    background: transparent;
+    border-radius: 22px 0 0 22px;
+    min-height: auto;
+    padding: 0;
+}
+
+.login-background-shell .login-left::before {
+    display: none;
+}
+
+.login-background-shell .login-right {
+    background: transparent;
+    border-radius: 0 22px 22px 0;
+    padding: 54px 64px 54px 20px;
+}
+
+.login-background-shell .login-card-modern {
+    backdrop-filter: blur(18px);
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(226, 232, 240, 0.82);
+    box-shadow: 0 28px 70px rgba(8, 27, 51, 0.12);
+}
+
 .login-card-modern {
     background: rgba(255, 255, 255, 0.94);
     border: 1px solid rgba(226, 232, 240, 0.9);
@@ -463,8 +669,9 @@ a {
 
 .brand-icon {
     align-items: center;
-    border: 2px solid rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.72);
     border-radius: 14px;
+    background: rgba(255, 255, 255, 0.96);
     color: #fff;
     display: inline-flex;
     flex: 0 0 auto;
@@ -472,6 +679,22 @@ a {
     height: 52px;
     justify-content: center;
     width: 52px;
+}
+
+.brand-logo-mark {
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
+    overflow: hidden;
+    padding: 0;
+}
+
+.brand-logo-mark img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    object-position: left center;
+    transform: scale(1.72);
+    transform-origin: left center;
+    width: 100%;
 }
 
 .brand-text {
@@ -632,6 +855,34 @@ a {
     color: var(--ink) !important;
     font-size: 18px;
     font-weight: 700;
+}
+
+.navbar-brand-title {
+    align-items: center;
+    display: inline-flex !important;
+    gap: 10px;
+}
+
+.navbar-logo-mark {
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #dbeafe;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
+    display: inline-flex;
+    height: 36px;
+    justify-content: center;
+    overflow: hidden;
+    width: 36px;
+}
+
+.navbar-logo-mark img {
+    height: 100%;
+    object-fit: cover;
+    object-position: left center;
+    transform: scale(1.75);
+    transform-origin: left center;
+    width: 100%;
 }
 
 .top-icon {
@@ -904,6 +1155,47 @@ a {
     overflow: hidden;
 }
 
+.table-tools {
+    align-items: center;
+    background: #ffffff;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    gap: 14px;
+    justify-content: space-between;
+    padding: 14px 18px;
+}
+
+.table-count {
+    align-items: center;
+    color: var(--muted);
+    display: flex;
+    font-size: 13px;
+    font-weight: 700;
+    gap: 8px;
+}
+
+.table-search {
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #d8e0ec;
+    border-radius: 999px;
+    color: var(--muted);
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    min-width: 260px;
+    padding: 0 14px;
+}
+
+.table-search input {
+    background: transparent;
+    border: 0;
+    color: var(--ink);
+    min-height: 40px;
+    outline: 0;
+    width: 100%;
+}
+
 .table-responsive {
     border-radius: 0 0 var(--radius) var(--radius);
 }
@@ -920,7 +1212,10 @@ a {
     font-size: 12px;
     font-weight: 800;
     padding: 16px;
+    position: sticky;
+    top: 0;
     text-transform: uppercase;
+    z-index: 2;
 }
 
 .table tbody td {
@@ -1088,6 +1383,15 @@ select.form-control {
     min-height: 46px;
 }
 
+textarea.form-control {
+    min-height: 92px;
+}
+
+label {
+    color: #1f2937;
+    font-weight: 700;
+}
+
 .form-control:focus,
 .custom-select:focus,
 select.form-control:focus {
@@ -1225,6 +1529,12 @@ select.form-control:focus {
         font-size: 30px;
     }
 
+    .login-brand-badge {
+        height: 64px;
+        margin-bottom: 24px;
+        width: 210px;
+    }
+
     .feature-row {
         gap: 12px;
     }
@@ -1257,6 +1567,51 @@ select.form-control:focus {
         grid-template-columns: 1fr;
     }
 
+    .table-tools {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .table-search {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .table tbody td,
+    .table thead th {
+        padding: 13px 14px;
+        white-space: nowrap;
+    }
+
+    .card-header {
+        padding: 16px;
+    }
+
+    .content-header .container-fluid,
+    .content-header .app-shell {
+        align-items: flex-start !important;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .btn {
+        min-height: 42px;
+    }
+
+    .app-toast-container {
+        left: 16px;
+        right: 16px;
+        top: 74px;
+    }
+
+    .app-confirm-dialog {
+        padding: 24px 18px;
+    }
+
+    .app-confirm-actions {
+        flex-direction: column-reverse;
+    }
+
     .approval-flow,
     .approval-flow.compact {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1269,5 +1624,57 @@ select.form-control:focus {
 
     .app-navbar {
         min-height: 64px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .login-background-shell {
+        background:
+            linear-gradient(180deg, rgba(248, 251, 255, 0.08), rgba(248, 251, 255, 0.88) 48%, rgba(248, 251, 255, 0.96)),
+            url("../adminlte/login-background.png") left top / cover no-repeat;
+        grid-template-columns: 1fr;
+        min-height: calc(100vh - 24px);
+    }
+
+    .login-background-shell::after {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.82) 58%, rgba(255, 255, 255, 0.94));
+    }
+
+    .login-background-shell .login-left {
+        min-height: 360px;
+    }
+
+    .login-background-shell .login-right {
+        border-radius: 0 0 22px 22px;
+        padding: 24px 24px 34px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .login-bg-body {
+        background:
+            linear-gradient(180deg, rgba(248, 251, 255, 0.18), rgba(248, 251, 255, 0.92) 48%, rgba(248, 251, 255, 1)),
+            url("../adminlte/login-background.png") 18% top / auto 48vh no-repeat;
+    }
+
+    .login-background-shell {
+        border-radius: 0;
+        margin: 0;
+        min-height: 100vh;
+        width: 100%;
+    }
+
+    .login-background-shell .login-left {
+        border-radius: 0;
+        min-height: 300px;
+    }
+
+    .login-background-shell .login-right {
+        border-radius: 0;
+        padding: 18px 18px 26px;
+    }
+
+    .login-background-shell .login-card-modern {
+        box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
     }
 }

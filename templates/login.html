@@ -9,61 +9,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='adminlte/custom.css') }}">
 </head>
-<body class="modern-login-body">
-<main class="login-split">
-    <section class="login-left">
-        <div>
-            <div class="login-logo-mark">
-                <i class="fas fa-cube"></i>
-            </div>
-            <h1>Sistem Pengajuan Barang <span>Material</span></h1>
-            <p>Kelola pengajuan barang material dengan mudah, cepat dan terstruktur.</p>
-            <div class="visual-board login-visual">
-                <div class="visual-card visual-main">
-                    <div class="visual-card-head">
-                        <span></span><span></span><span></span>
-                    </div>
-                    <div class="visual-chart">
-                        <i></i><i></i><i></i><i></i>
-                    </div>
-                    <div class="visual-line wide"></div>
-                    <div class="visual-line"></div>
-                </div>
-                <div class="visual-card visual-small visual-inventory">
-                    <i class="fas fa-cube"></i>
-                    <strong>Material</strong>
-                    <span>Ready</span>
-                </div>
-                <div class="visual-card visual-small visual-status">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Approval</strong>
-                    <span>Fast track</span>
-                </div>
-            </div>
-        </div>
-        <div class="feature-row">
-            <div class="feature-item">
-                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                <strong>Aman</strong>
-                <span>Data terjaga keamanannya</span>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                <strong>Cepat</strong>
-                <span>Proses pengajuan efisien</span>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
-                <strong>Terstruktur</strong>
-                <span>Informasi mudah dilacak</span>
-            </div>
-        </div>
+<body class="modern-login-body login-bg-body">
+<main class="login-split login-background-shell">
+    <section class="login-left login-art-panel" aria-label="Sistem Pengajuan Barang Material">
     </section>
 
     <section class="login-right">
         <div class="login-card-modern">
-            <div class="login-user-icon">
-                <i class="fas fa-user"></i>
+            <div class="login-user-icon login-logo-icon">
+                <img src="{{ url_for('static', filename='adminlte/logo-material.png') }}" alt="Logo">
             </div>
             <h2>Selamat Datang</h2>
             <p class="subtitle">Silakan login terlebih dahulu</p>
@@ -106,5 +60,6 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='adminlte/app-ui.js') }}"></script>
 </body>
 </html>
