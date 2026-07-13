@@ -5,19 +5,19 @@ Sistem Pengajuan Barang Material adalah aplikasi web berbasis **Python Flask** u
 ## Preview Aplikasi
 
 ### Login
-![Login](docs/screenshots/login.png)
+![Login](docs/screenshots/login-20260713.png)
 
 ### Dashboard Admin
-![Dashboard Admin](docs/screenshots/dashboard-admin.png)
+![Dashboard Admin](docs/screenshots/dashboard-admin-20260713.png)
 
 ### Dashboard User
-![Dashboard User](docs/screenshots/dashboard-user.png)
+![Dashboard User](docs/screenshots/dashboard-user-20260713.png)
 
 ### Dashboard Accounting
-![Dashboard Accounting](docs/screenshots/dashboard-accounting.png)
+![Dashboard Accounting](docs/screenshots/dashboard-accounting-20260713.png)
 
 ### Dashboard Manager
-![Dashboard Manager](docs/screenshots/dashboard-manager.png)
+![Dashboard Manager](docs/screenshots/dashboard-manager-20260713.png)
 
 ## Fitur Utama
 
@@ -97,7 +97,12 @@ flask_python6/
 |       |-- dashboard-admin.png
 |       |-- dashboard-user.png
 |       |-- dashboard-accounting.png
-|       `-- dashboard-manager.png
+|       |-- dashboard-manager.png
+|       |-- login-20260713.png
+|       |-- dashboard-admin-20260713.png
+|       |-- dashboard-user-20260713.png
+|       |-- dashboard-accounting-20260713.png
+|       `-- dashboard-manager-20260713.png
 |-- static/
 |   `-- adminlte/
 |       |-- custom.css
